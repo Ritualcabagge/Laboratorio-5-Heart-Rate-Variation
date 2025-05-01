@@ -200,8 +200,6 @@ std_rr = np.std(rr_intervals_5s)
 
 print(f"Media R-R (0–5 s): {media_rr:.3f} s")
 print(f"Desviación estándar R-R (0–5 s): {std_rr:.3f} s")
-
-# Interpretación (puedes copiar al informe)
 if media_rr > 1:
     interpretacion = "frecuencia cardíaca baja (bradicardia o reposo profundo)"
 elif media_rr < 0.6:
@@ -224,9 +222,48 @@ Entre 0.6 y 1 s - frecuencia cardíaca normal.
 obteniendo :
 
 Media R-R (0–5 s): 0.943 s
+
+
 Desviación estándar R-R (0–5 s): 0.072 s
+
+
 Interpretación fisiológica: frecuencia cardíaca normal en reposo
 
+
+e. Aplicación de transformada Wavelet
+
+```phyton
+# Transformada Wavelet Continua (CWT)
+wavelet = 'cmor1.5-1.0'  # Wavelet compleja Morlet
+scales = np.arange(1, 512)
+coef, freqs = pywt.cwt(ecg_filtrada_5s, scales, wavelet, sampling_period=1/fs)
+rr_intervals = rr_intervals_5s
+rr_times = tiempo_5s[peaks_5s][1:]
+
+# frecuencia constante (para CWT)
+fs_interp = 4  # Frecuencia de muestreo de interpolación
+tiempo_uniforme = np.linspace(rr_times[0], rr_times[-1], int((rr_times[-1] - rr_times[0]) * fs_interp))
+f_interp = interp1d(rr_times, rr_intervals, kind='cubic', fill_value='extrapolate')
+rr_interp = f_interp(tiempo_uniforme)
+wavelet = 'cmor1.5-1.0'
+scales = np.arange(1, 512)
+coef, freqs = pywt.cwt(rr_interp, scales, wavelet, sampling_period=1/fs_interp)
+power = np.abs(coef)**2
+
+4. Graficar espectrograma
+plt.figure(figsize=(12, 6))
+plt.imshow(power, extent=[tiempo_uniforme[0], tiempo_uniforme[-1], freqs[-1], freqs[0]],
+           cmap='plasma', aspect='auto', origin='lower')
+plt.colorbar(label='Potencia Wavelet |W(t, f)|²')
+```
+
+Se aplica una Transformada Wavelet Continua a la serie R–R obtenida, permitiendo visualizar cómo varía la actividad del sistema nervioso autónomo en el tiempo y en distintas bandas de frecuencia luego se realiza una i adaptacion a la señal R–R a una frecuencia uniforme y luego se obtiene el espectrograma que muestra la potencia de la señal HRV en las bandas de interés (LF y HF) en donde:
+
+
+Las frecuencias bajas (LF) entre 0.04 y 0.15 Hz están asociadas a una combinación de actividad simpática y parasimpática
+
+
+Las frecuencias altas (HF) entre 0.15 y 0.4 Hz reflejan principalmente la actividad parasimpática (vagal), relacionada con la respiración
 
 
 
