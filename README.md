@@ -158,6 +158,7 @@ Zoom en los últimos 5 segundos: Similar a la anterior, pero muestra los instant
 Cada gráfica está debidamente etiquetada con títulos, ejes y leyendas, y se le aplica una cuadrícula para facilitar la lectura de valores.
 
 ```python
+
 inicio = 0
 fin = 5
 mask = (tiempo >= inicio) & (tiempo <= fin)
@@ -191,7 +192,7 @@ plt.show()
 ```
 
 Análisis de la HRV en el dominio del tiempo
-```pytohon
+```python
 # Análisis HRV en dominio del tiempo
 
 media_rr = np.mean(rr_intervals_5s)
