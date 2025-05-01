@@ -233,6 +233,7 @@ Interpretación fisiológica: frecuencia cardíaca normal en reposo
 e. Aplicación de transformada Wavelet
 
 ```phyton
+
 # Transformada Wavelet Continua (CWT)
 wavelet = 'cmor1.5-1.0'  # Wavelet compleja Morlet
 scales = np.arange(1, 512)
