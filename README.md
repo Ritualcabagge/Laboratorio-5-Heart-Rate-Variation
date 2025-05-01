@@ -272,7 +272,6 @@ plt.legend(loc='upper right')
 plt.grid(True)
 plt.tight_layout()
 plt.show()
-
 ```
 
 Se aplica una Transformada Wavelet Continua a la serie R–R obtenida, permitiendo visualizar cómo varía la actividad del sistema nervioso autónomo en el tiempo y en distintas bandas de frecuencia luego se realiza una i adaptacion a la señal R–R a una frecuencia uniforme y luego se obtiene el espectrograma que muestra la potencia de la señal HRV en las bandas de interés (LF y HF) en donde:
@@ -282,6 +281,36 @@ Las frecuencias bajas (LF) entre 0.04 y 0.15 Hz están asociadas a una combinaci
 
 
 Las frecuencias altas (HF) entre 0.15 y 0.4 Hz reflejan principalmente la actividad parasimpática (vagal), relacionada con la respiración
+
+RESULTADOS:
+
+
+-SEÑAL ECG
+
+
+![image](https://github.com/user-attachments/assets/c25bba38-dfb5-4e9a-9ab3-212cf31aafca)
+
+
+-SEÑAL ECG(RANGO DE TIEMPO)
+
+
+![image](https://github.com/user-attachments/assets/e33a8597-ac88-47f0-82bd-6206841cb2f3)
+
+
+-SEÑAL FILTRADA CON SU DETECCION DE PICOS R-R
+
+
+![image](https://github.com/user-attachments/assets/acb11eb4-8689-44bd-8190-9ede069d38c0)
+
+
+-ESPECTOGRAMA WAVELET(CTW)
+
+
+![image](https://github.com/user-attachments/assets/0a8a5491-c82b-4d25-8f14-457bb4d844f9)
+
+
+
+
 
 
 
