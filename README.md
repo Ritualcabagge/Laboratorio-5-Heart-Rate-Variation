@@ -158,3 +158,6 @@ Zoom en los últimos 5 segundos: Similar a la anterior, pero muestra los instant
 Cada gráfica está debidamente etiquetada con títulos, ejes y leyendas, y se le aplica una cuadrícula para facilitar la lectura de valores.
 
 d. Análisis de la HRV en el dominio del tiempo 
+
+hola
+
