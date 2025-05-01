@@ -233,18 +233,19 @@ Interpretación fisiológica: frecuencia cardíaca normal en reposo
 e. Aplicación de transformada Wavelet
 
 ```phyton
-# Transformada Wavelet Continua (CWT)
 wavelet = 'cmor1.5-1.0'  # Wavelet compleja Morlet
 scales = np.arange(1, 512)
 coef, freqs = pywt.cwt(ecg_filtrada_5s, scales, wavelet, sampling_period=1/fs)
 rr_intervals = rr_intervals_5s
 rr_times = tiempo_5s[peaks_5s][1:]
 
-# frecuencia constante (para CWT)
+# configurar RR a frecuencia constante (para CWT)
 fs_interp = 4  # Frecuencia de muestreo de interpolación
 tiempo_uniforme = np.linspace(rr_times[0], rr_times[-1], int((rr_times[-1] - rr_times[0]) * fs_interp))
 f_interp = interp1d(rr_times, rr_intervals, kind='cubic', fill_value='extrapolate')
 rr_interp = f_interp(tiempo_uniforme)
+
+# Transformada Wavelet Continua
 wavelet = 'cmor1.5-1.0'
 scales = np.arange(1, 512)
 coef, freqs = pywt.cwt(rr_interp, scales, wavelet, sampling_period=1/fs_interp)
@@ -255,11 +256,14 @@ plt.figure(figsize=(12, 6))
 plt.imshow(power, extent=[tiempo_uniforme[0], tiempo_uniforme[-1], freqs[-1], freqs[0]],
            cmap='plasma', aspect='auto', origin='lower')
 plt.colorbar(label='Potencia Wavelet |W(t, f)|²')
+
 plt.axhspan(0.04, 0.15, color='cyan', alpha=0.5, label='LF (0.04–0.15 Hz)')
 plt.axhspan(0.15, 0.4, color='lightgreen', alpha=0.5, label='HF (0.15–0.4 Hz)')
+
 plt.axhline(0.04, color='white', linestyle='--', linewidth=1)
 plt.axhline(0.15, color='white', linestyle='--', linewidth=1)
 plt.axhline(0.4, color='white', linestyle='--', linewidth=1)
+
 plt.xlabel("Tiempo (s)")
 plt.ylabel("Frecuencia (Hz)")
 plt.title("Espectrograma Wavelet (CWT) de la Serie R-R\n(Wavelet: cmor1.5-1.0)")
@@ -268,6 +272,7 @@ plt.legend(loc='upper right')
 plt.grid(True)
 plt.tight_layout()
 plt.show()
+
 ```
 
 Se aplica una Transformada Wavelet Continua a la serie R–R obtenida, permitiendo visualizar cómo varía la actividad del sistema nervioso autónomo en el tiempo y en distintas bandas de frecuencia luego se realiza una i adaptacion a la señal R–R a una frecuencia uniforme y luego se obtiene el espectrograma que muestra la potencia de la señal HRV en las bandas de interés (LF y HF) en donde:
