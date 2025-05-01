@@ -233,7 +233,6 @@ Interpretación fisiológica: frecuencia cardíaca normal en reposo
 e. Aplicación de transformada Wavelet
 
 ```phyton
-
 # Transformada Wavelet Continua (CWT)
 wavelet = 'cmor1.5-1.0'  # Wavelet compleja Morlet
 scales = np.arange(1, 512)
@@ -251,7 +250,7 @@ scales = np.arange(1, 512)
 coef, freqs = pywt.cwt(rr_interp, scales, wavelet, sampling_period=1/fs_interp)
 power = np.abs(coef)**2
 
-4. Graficar espectrograma
+# Graficar espectrograma
 plt.figure(figsize=(12, 6))
 plt.imshow(power, extent=[tiempo_uniforme[0], tiempo_uniforme[-1], freqs[-1], freqs[0]],
            cmap='plasma', aspect='auto', origin='lower')
