@@ -285,7 +285,7 @@ Las frecuencias altas (HF) entre 0.15 y 0.4 Hz reflejan principalmente la activi
 RESULTADOS:
 
 
--SEÑAL ECG
+- SEÑAL ECG
 
 
 ![image](https://github.com/user-attachments/assets/c25bba38-dfb5-4e9a-9ab3-212cf31aafca)
@@ -297,13 +297,13 @@ RESULTADOS:
 ![image](https://github.com/user-attachments/assets/e33a8597-ac88-47f0-82bd-6206841cb2f3)
 
 
--SEÑAL FILTRADA CON SU DETECCION DE PICOS R-R
+- SEÑAL FILTRADA CON SU DETECCION DE PICOS R-R
 
 
 ![image](https://github.com/user-attachments/assets/acb11eb4-8689-44bd-8190-9ede069d38c0)
 
 
--ESPECTOGRAMA WAVELET(CTW)
+- ESPECTOGRAMA WAVELET(CTW)
 
 
 ![image](https://github.com/user-attachments/assets/0a8a5491-c82b-4d25-8f14-457bb4d844f9)
