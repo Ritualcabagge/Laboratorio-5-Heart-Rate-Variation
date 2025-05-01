@@ -255,6 +255,19 @@ plt.figure(figsize=(12, 6))
 plt.imshow(power, extent=[tiempo_uniforme[0], tiempo_uniforme[-1], freqs[-1], freqs[0]],
            cmap='plasma', aspect='auto', origin='lower')
 plt.colorbar(label='Potencia Wavelet |W(t, f)|²')
+plt.axhspan(0.04, 0.15, color='cyan', alpha=0.5, label='LF (0.04–0.15 Hz)')
+plt.axhspan(0.15, 0.4, color='lightgreen', alpha=0.5, label='HF (0.15–0.4 Hz)')
+plt.axhline(0.04, color='white', linestyle='--', linewidth=1)
+plt.axhline(0.15, color='white', linestyle='--', linewidth=1)
+plt.axhline(0.4, color='white', linestyle='--', linewidth=1)
+plt.xlabel("Tiempo (s)")
+plt.ylabel("Frecuencia (Hz)")
+plt.title("Espectrograma Wavelet (CWT) de la Serie R-R\n(Wavelet: cmor1.5-1.0)")
+plt.ylim(0, 0.5)
+plt.legend(loc='upper right')
+plt.grid(True)
+plt.tight_layout()
+plt.show()
 ```
 
 Se aplica una Transformada Wavelet Continua a la serie R–R obtenida, permitiendo visualizar cómo varía la actividad del sistema nervioso autónomo en el tiempo y en distintas bandas de frecuencia luego se realiza una i adaptacion a la señal R–R a una frecuencia uniforme y luego se obtiene el espectrograma que muestra la potencia de la señal HRV en las bandas de interés (LF y HF) en donde:
