@@ -43,14 +43,14 @@ plt.xlim(0,5)
 plt.legend()
 plt.show()
 
-# DETECCIÓN DE PICOS R EN  0 A 5 SEGUNDOS
+# DETECCIÓN DE PICOS R EN   0 A 5 SEGUNDOS
 inicio = 0
 fin = 5
 mask = (tiempo >= inicio) & (tiempo <= fin)
 tiempo_5s = tiempo[mask]
 voltaje_5s = voltaje[mask]
 
-
+# Filtro pasa banda 0.5–40 Hz
 def butter_bandpass_filter(data, lowcut=0.5, highcut=40, fs=1000, order=4):
     nyq = 0.5 * fs
     low = lowcut / nyq
@@ -64,7 +64,7 @@ ecg_filtrada_5s = butter_bandpass_filter(voltaje_5s)
 # Detección de picos R
 peaks_5s, _ = find_peaks(ecg_filtrada_5s, distance=int(0.6 * fs), height=np.mean(ecg_filtrada_5s))
 
-# Graficar ECG filtrada y picos
+# Graficar ECG filtrada + picos
 plt.figure(figsize=(15, 4))
 plt.plot(tiempo_5s, ecg_filtrada_5s, label="ECG filtrada (0–5 s)")
 plt.plot(tiempo_5s[peaks_5s], ecg_filtrada_5s[peaks_5s], "ro", label="Picos R")
@@ -74,33 +74,26 @@ plt.ylabel("Amplitud")
 plt.legend()
 plt.grid()
 plt.show()
-----
 inicio = 0
 fin = 5
 mask = (tiempo >= inicio) & (tiempo <= fin)
 tiempo_5s = tiempo[mask]
 voltaje_5s = voltaje[mask]
 
-
+# Filtro pasa banda: 0.5 a 40 Hz
 def butter_bandpass_filter(data, lowcut=0.5, highcut=40, fs=1000, order=4):
     nyq = 0.5 * fs
     b, a = butter(order, [lowcut / nyq, highcut / nyq], btype='band')
     return filtfilt(b, a, data)
 
 ecg_filtrada_5s = butter_bandpass_filter(voltaje_5s)
-
-# Detección de picos R y cálculo de intervalos R-R
-
 peaks_5s, _ = find_peaks(ecg_filtrada_5s, distance=int(0.6 * fs), height=np.mean(ecg_filtrada_5s))
 rr_intervals_5s = np.diff(tiempo_5s[peaks_5s])  # en segundos
-
 media_rr = np.mean(rr_intervals_5s)
 std_rr = np.std(rr_intervals_5s)
 
 print(f"Media R-R (0–5 s): {media_rr:.3f} s")
 print(f"Desviación estándar R-R (0–5 s): {std_rr:.3f} s")
-
-# Interpretación (puedes copiar al informe)
 if media_rr > 1:
     interpretacion = "frecuencia cardíaca baja (bradicardia o reposo profundo)"
 elif media_rr < 0.6:
@@ -108,25 +101,22 @@ elif media_rr < 0.6:
 else:
     interpretacion = "frecuencia cardíaca normal en reposo"
 print("Interpretación fisiológica:", interpretacion)
-
-
-# Transformada Wavelet Continua (CWT)
 wavelet = 'cmor1.5-1.0'  # Wavelet compleja Morlet
 scales = np.arange(1, 512)
 coef, freqs = pywt.cwt(ecg_filtrada_5s, scales, wavelet, sampling_period=1/fs)
+
 rr_intervals = rr_intervals_5s
 rr_times = tiempo_5s[peaks_5s][1:]
-
 fs_interp = 4  # Frecuencia de muestreo de interpolación
 tiempo_uniforme = np.linspace(rr_times[0], rr_times[-1], int((rr_times[-1] - rr_times[0]) * fs_interp))
 f_interp = interp1d(rr_times, rr_intervals, kind='cubic', fill_value='extrapolate')
 rr_interp = f_interp(tiempo_uniforme)
-
+#  Transformada Wavelet Continua
 wavelet = 'cmor1.5-1.0'
 scales = np.arange(1, 512)
 coef, freqs = pywt.cwt(rr_interp, scales, wavelet, sampling_period=1/fs_interp)
 power = np.abs(coef)**2
-
+# Graficar espectrograma
 plt.figure(figsize=(12, 6))
 plt.imshow(power, extent=[tiempo_uniforme[0], tiempo_uniforme[-1], freqs[-1], freqs[0]],
            cmap='plasma', aspect='auto', origin='lower')
