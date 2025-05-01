@@ -189,10 +189,38 @@ plt.legend()
 plt.grid()
 plt.show()
 ```
-En este bloque de código toma la señal ECG y la recorta a 5 segundos para luego filtrarla para eliminar ruido, detectando los latidos (picos R) y graficando el resultado. Es un paso crucial para luego calcular intervalos 
-
 
 Análisis de la HRV en el dominio del tiempo
+```pytohon
+# Análisis HRV en dominio del tiempo
+
+media_rr = np.mean(rr_intervals_5s)
+std_rr = np.std(rr_intervals_5s)
+
+print(f"Media R-R (0–5 s): {media_rr:.3f} s")
+print(f"Desviación estándar R-R (0–5 s): {std_rr:.3f} s")
+
+# Interpretación (puedes copiar al informe)
+if media_rr > 1:
+    interpretacion = "frecuencia cardíaca baja (bradicardia o reposo profundo)"
+elif media_rr < 0.6:
+    interpretacion = "frecuencia cardíaca alta (posible estrés, ejercicio o error)"
+else:
+    interpretacion = "frecuencia cardíaca normal en reposo"
+print("Interpretación fisiológica:", interpretacion)
+```
+Este bloque calcula la media y variabilidad de los intervalos entre latidos (R-R), lo cual permite evaluar el estado del sistema nervioso autónomo obteniendo asi Interpreta automáticamente el valor de la media R–R donde
+-1 s - ritmo lento - posible bradicardia.
+
+-0.6 s - ritmo acelerado - posible estrés o ejercicio.
+
+Entre 0.6 y 1 s - frecuencia cardíaca normal.
+
+obteniendo :
+
+Media R-R (0–5 s): 0.943 s
+Desviación estándar R-R (0–5 s): 0.072 s
+Interpretación fisiológica: frecuencia cardíaca normal en reposo
 
 
 
