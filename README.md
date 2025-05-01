@@ -146,7 +146,38 @@ plt.xlim(115,120)
 plt.grid(True)
 plt.legend()
 plt.show()
-```
+```python
+inicio = 0
+fin = 5
+mask = (tiempo >= inicio) & (tiempo <= fin)
+tiempo_5s = tiempo[mask]
+voltaje_5s = voltaje[mask]
+
+# Filtro pasa banda 0.5–40 Hz
+def butter_bandpass_filter(data, lowcut=0.5, highcut=40, fs=1000, order=4):
+    nyq = 0.5 * fs
+    low = lowcut / nyq
+    high = highcut / nyq
+    b, a = butter(order, [low, high], btype='band')
+    y = filtfilt(b, a, data)
+    return y
+
+ecg_filtrada_5s = butter_bandpass_filter(voltaje_5s)
+
+# Detección de picos R
+peaks_5s, _ = find_peaks(ecg_filtrada_5s, distance=int(0.6 * fs), height=np.mean(ecg_filtrada_5s))
+
+# Graficar ECG filtrada + picos
+plt.figure(figsize=(15, 4))
+plt.plot(tiempo_5s, ecg_filtrada_5s, label="ECG filtrada (0–5 s)")
+plt.plot(tiempo_5s[peaks_5s], ecg_filtrada_5s[peaks_5s], "ro", label="Picos R")
+plt.title("Detección de Picos R en ECG (0–5 segundos)")
+plt.xlabel("Tiempo (s)")
+plt.ylabel("Amplitud")
+plt.legend()
+plt.grid()
+plt.show()
+
 Después de aplicar el filtro, se generan tres gráficas con matplotlib para observar el comportamiento de la señal:
 
 Gráfica completa (0 a 120 s): Permite observar la señal a lo largo de toda su duración, útil para detectar cambios globales, artefactos o eventos cardíacos atípicos a lo largo del tiempo.
