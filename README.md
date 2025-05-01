@@ -190,7 +190,9 @@ plt.grid()
 plt.show()
 ```
 En este bloque de código toma la señal ECG y la recorta a 5 segundos para luego filtrarla para eliminar ruido, detectando los latidos (picos R) y graficando el resultado. Es un paso crucial para luego calcular intervalos 
--Análisis de la HRV en el dominio del tiempo
+
+
+Análisis de la HRV en el dominio del tiempo
 
 
 
