@@ -210,12 +210,16 @@ else:
     interpretacion = "frecuencia cardíaca normal en reposo"
 print("Interpretación fisiológica:", interpretacion)
 ```
-Este bloque calcula la media y variabilidad de los intervalos entre latidos (R-R), lo cual permite evaluar el estado del sistema nervioso autónomo obteniendo asi Interpreta automáticamente el valor de la media R–R donde
+Este bloque calcula la media y variabilidad de los intervalos entre latidos (R-R), lo cual permite evaluar el estado del sistema nervioso autónomo obteniendo asi Interpreta automáticamente el valor de la media R–R donde 
+
 -1 s - ritmo lento - posible bradicardia.
+
 
 -0.6 s - ritmo acelerado - posible estrés o ejercicio.
 
+
 Entre 0.6 y 1 s - frecuencia cardíaca normal.
+
 
 obteniendo :
 
